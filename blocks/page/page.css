@@ -1,0 +1,9 @@
+@import url("./__container/page__container.css");
+.page{
+  margin: 0;
+  background-color: rgba(0, 0, 0, 1);
+  max-width: 1200px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+}
