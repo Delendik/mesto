@@ -18,12 +18,16 @@ const popupToggle = function() {
 popupOpenButton.addEventListener('click', popupToggle);
 popupCloseButton.addEventListener('click', popupToggle);
 
-const editProfile = function(){
+let formElement = popup.querySelector('.popup__form');
+
+const editProfile = function(evt){
+  evt.preventDefault();
   profileName.textContent=popupName.value;
   profileAbout.textContent = popupAbout.value;
   popupToggle();
 }
 
+formElement.addEventListener('submit', editProfile);
 popupSaveButton.addEventListener('click', editProfile);
 
 

@@ -1,6 +1,6 @@
 @import url("./__container/page__container.css");
 .page{
-  margin: 0;
+  margin: 0 auto;
   background-color: rgba(0, 0, 0, 1);
   max-width: 1200px;
   font-family: Inter;
