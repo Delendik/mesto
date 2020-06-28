@@ -1,9 +1,7 @@
-@import url(./_black/card__like_black.css);
-
-.card__like{
+.card__like_black{
   padding: 0;
   border: none;
-  background-image: url("../../../images/Like.svg");
+  background-image: url("../../../../images/Like_black.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto;
@@ -24,6 +22,6 @@
   }
 }
 
-.card__like:hover{
+.card__like_black:hover{
   animation: transparency 1s linear 1 forwards;
 }
