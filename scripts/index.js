@@ -28,26 +28,51 @@ const initialCards = [
 const templateCard = document.querySelector('.template-card');
 const cardList = document.querySelector('.cards-list');
 
-
-function addCard(card) {
+function addCard(name, link) {
   const cards = templateCard.content.cloneNode(true);
   const cardTitle = cards.querySelector('.card__title');
   const cardLink = cards.querySelector('.card__picture');
-  cardTitle.textContent = card.name;
-  cardLink.src = card.link;
-  //addTodoListeners(todo);
-
-  cardList.append(cards);
+  cardTitle.textContent = name;
+  cardLink.src = link;
+  cardList.prepend(cards);
 }
 
 if(initialCards==false){
   document.querySelector('.cards-list__empty').style.display='flex';
   document.querySelector('.cards-list').style.display='flex';
 }else{
-  initialCards.forEach(card=>{
-    addCard(card);
+  initialCards.forEach(item=>{
+    addCard(item.name, item.link);
   });
 }
+
+const popupAddCard = document.querySelector('.popupAddCard');
+let popupOpenButtonAddPicture = document.querySelector('.profile__addPicture');
+let popupCloseButtonAddPicture = popupAddCard.querySelector('.popup__close');
+
+const popupToggleAddCard = function() {
+  popupAddCard.querySelector('.popup__nameOfPlace').value = 'Название';
+  popupAddCard.querySelector('.popup__linkForPicture').value = "Ссылка на картинку";
+  popupAddCard.classList.toggle('popup__opened');
+}
+
+popupOpenButtonAddPicture.addEventListener('click', popupToggleAddCard);
+popupCloseButtonAddPicture.addEventListener('click', popupToggleAddCard);
+
+const addNewCard = function(evt){
+  evt.preventDefault();
+  name = popupAddCard.querySelector('.popup__nameOfPlace').value;
+  link = popupAddCard.querySelector('.popup__linkForPicture').value
+  addCard(name, link);
+ 
+  popupToggleAddCard();
+  
+}
+
+let formElementAddCard = popupAddCard.querySelector('.popup__form');
+let popupButtonSaveCard = popupAddCard.querySelector('.popup__save');
+
+popupButtonSaveCard.addEventListener('click', addNewCard);
 
 const popupEditProfile = document.querySelector('.popupEditProfile');
 let popupOpenButton = document.querySelector('.profile__button');
@@ -80,5 +105,3 @@ const editProfile = function(evt){
 
 formElement.addEventListener('submit', editProfile);
 popupSaveButton.addEventListener('click', editProfile);
-
-
