@@ -28,12 +28,18 @@ const initialCards = [
 const templateCard = document.querySelector('.template-card');
 const cardList = document.querySelector('.cards-list');
 
-const addTodoListeners = function (card) {
+const buttonListeners = function (card) {
   card.querySelector('.card__like').addEventListener('click', likeCard);
+  card.querySelector('.card__trash').addEventListener('click', removeCard);
 } 
 
 const likeCard = function (evt) {
   evt.target.classList.toggle('card__like_black');
+}
+
+const removeCard = function (evt) {
+  const card = evt.target.closest('.card');
+  card.remove();
 }
 
 function addCard(name, link) {
@@ -42,7 +48,7 @@ function addCard(name, link) {
   const cardLink = cards.querySelector('.card__picture');
   cardTitle.textContent = name;
   cardLink.src = link;
-  addTodoListeners(cards);
+  buttonListeners(cards);
   cardList.prepend(cards);
 }
 
@@ -103,7 +109,8 @@ popupCloseButton.addEventListener('click', popupToggle);
 
 let formElement = popupEditProfile.querySelector('.popup__form');
 
-const editProfile = function(){
+const editProfile = function(evt){
+  evt.preventDefault();
   profileName.textContent=popupName.value;
   profileAbout.textContent = popupAbout.value;
   popupToggle();
