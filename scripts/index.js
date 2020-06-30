@@ -25,8 +25,8 @@ const initialCards = [
   }
 ];
 
-const templateCard = document.querySelector('.template-card');
-const cardList = document.querySelector('.cards-list');
+const templateCard = document.querySelector('.templateCard');
+const cardList = document.querySelector('.cardsList');
 
 const buttonListeners = function (card) {
   card.querySelector('.card__like').addEventListener('click', likeCard);
@@ -75,8 +75,8 @@ function addCard(name, link) {
 }
 
 if(initialCards==false){
-  document.querySelector('.cards-list__empty').style.display='flex';
-  document.querySelector('.cards-list').style.display='flex';
+  document.querySelector('.cardsList__empty').style.display='flex';
+  document.querySelector('.cardsList').style.display='flex';
 }else{
   initialCards.forEach(item=>{
     addCard(item.name, item.link);

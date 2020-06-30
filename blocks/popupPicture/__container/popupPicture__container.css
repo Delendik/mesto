@@ -1,7 +1,6 @@
 .popupPicture__container{
   max-width: 865px;
   min-height: 611px;
-  width: 100%;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   position: relative;
   display: flex;
@@ -9,8 +8,14 @@
   box-sizing: border-box;
 }
 
-@media only screen and (max-width:570px){
+@media only screen and (max-width:920px){
   .popupPicture__container{
-    max-width: 290px;
+    max-width: 500px;
+  }
+}
+
+@media only screen and (max-width:520px){
+  .popupPicture__container{
+    max-width: 300px;
   }
 }
