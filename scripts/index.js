@@ -119,6 +119,13 @@ const closePopup = function(popup) {
   popup.classList.remove('popup_opened');
 }
 
+function keyPress (evt) {
+  if(evt.key === "Escape") {
+    closePopup(popupEditProfile);
+    closePopup(popupAddCard);
+  }
+}
+
 initialCards.forEach(item=>{
   addCard(item.name, item.link);
 });
@@ -129,9 +136,12 @@ popupClosePicture.addEventListener('click', () => closePopup(popupOpenPicture));
 
 popupOpenButtonAddPicture.addEventListener('click', () => openPopup(popupAddCard));
 popupCloseButtonAddPicture.addEventListener('click', () => closePopup(popupAddCard));
+popupAddCard.addEventListener('mousedown', (evt) => closePopup(evt.target));
 
 formElementAddCard.addEventListener('submit', addNewCard);
 
 popupOpenButton.addEventListener('click', popupOpenToggle);
 popupCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
+popupEditProfile.addEventListener('mousedown', (evt) => closePopup(evt.target));
 
+document.addEventListener('keydown', (evt) => keyPress(evt));
