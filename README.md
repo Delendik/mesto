@@ -1,4 +1,4 @@
-# Проект 4: Место
+# Проект 6: Место
 
 **Интро**
 
@@ -10,9 +10,12 @@
 -ul - Flexbox  
 -ul - Grid Layout  
 -ul - псевдокласс :hover  
--ul - JavaScript
+-ul - добавление, удаление и like карточек с помощью JavaScript
+-ul - popap-ы с помощью JavaScript
+-ul - валидация инпутов  с помощью JavaScript
 
 **Результат**
 
 Проект: https://github.com/Delendik/mesto.git
+
 Сайт: https://delendik.github.io/mesto/index.html
