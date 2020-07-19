@@ -94,6 +94,8 @@ const editProfile = function(evt){
 const openPopup = function (popup) {
   clearError(config);
   popup.classList.add('popup_opened');
+  const x = popupEditProfile.querySelector('.popup__save');
+  x.classList.remove('popup__save_inactive');
 };
 
 const closePopup = function(popup) {
