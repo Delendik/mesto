@@ -6,10 +6,14 @@ import {config} from './config.js';
 const templateCard = document.querySelector('.templateCard');
 const cardList = document.querySelector('.cardsList');
 
-initialCards.forEach(item=>{
-  const card = new Card(item.name, item.link, '.templateCard');
+const oneCard = (name, link, template)=>{
+  const card = new Card(name, link, template);
   const newCard = card.createCard();
   cardList.prepend(newCard);
+};
+
+initialCards.forEach(item=>{
+  oneCard(item.name, item.link, '.templateCard');
 });
 
 const popupOpenPicture = document.querySelector('.popupPicture');
@@ -23,19 +27,11 @@ const popupOpenButtonAddPicture = document.querySelector('.profile__addPicture')
 const popupCloseButtonAddPicture = popupAddCard.querySelector('.popup__close');
 const saveButtonAdd = popupAddCard.querySelector('.popup__save');
 
-const buttonListeners = function (card) {
-  card.querySelector('.card__like').addEventListener('click', likeCard);
-  card.querySelector('.card__trash').addEventListener('click', removeCard);
-  card.querySelector('.card__picture').addEventListener('click', openPicture);
-}; 
-
 const addNewCard = function(evt){
   evt.preventDefault();
   const name = popupAddCard.querySelector('.popup__nameOfPlace').value;
   const link = popupAddCard.querySelector('.popup__linkForPicture').value;
-  const card = new Card(name, link, '.templateCard');
-  const newCard = card.createCard();
-  cardList.prepend(newCard);
+  oneCard(name, link, '.templateCard');
   closePopup(popupAddCard);
   saveButtonAdd.classList.add('popup__save_inactive');
   saveButtonAdd.setAttribute('disabled', true);

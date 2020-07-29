@@ -1,4 +1,7 @@
 import {openPopup} from './index.js';
+
+
+
 export class Card {
   constructor(text, url, selector){
     this._text = text;
@@ -6,6 +9,10 @@ export class Card {
     this._selector = selector;
   }
   
+  _linkOfPicture = document.querySelector('.popupPicture__image');
+  _titleOfPicture = document.querySelector('.popupPicture__title');
+  _popupOpenPicture = document.querySelector('.popupPicture');
+
   _likeCard = (evt) => {
     evt.target.classList.toggle('card__like_black');
   };
@@ -24,9 +31,6 @@ export class Card {
     this._card = evt.target.closest('.card');
     this._link = this._card.querySelector('.card__picture');
     this._title = this._card.querySelector('.card__title');
-    this._linkOfPicture = document.querySelector('.popupPicture__image');
-    this._titleOfPicture = document.querySelector('.popupPicture__title');
-    this._popupOpenPicture = document.querySelector('.popupPicture');
     this._linkOfPicture.src = this._link.src;
     this._titleOfPicture.textContent = this._title.textContent;
     openPopup(this._popupOpenPicture);
