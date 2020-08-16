@@ -8,7 +8,7 @@ export class FormValidator {
   };
 
   _showError = (inputElement, errorMessage) => {
-    inputElement.classList.add('popup__input_type_error');
+    this.inputElement.classList.add('popup__input_type_error');
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     errorElement.textContent = errorMessage;
     errorElement.classList.add('popup__error_visible');
