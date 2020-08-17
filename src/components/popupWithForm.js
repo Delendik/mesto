@@ -1,9 +1,4 @@
 import {Popup} from './popup.js';
-import {FormValidator} from './validate.js';
-import {config} from '../utils/config.js';
-
-const formSelectorAddPicture = document.querySelector('.popup__formAddPicture');
-const formValidatorAddPicture = new FormValidator(config, formSelectorAddPicture);
 
 export class PopupWithForm extends Popup{
   constructor(popupSelector, handleFormSubmit){
@@ -11,21 +6,7 @@ export class PopupWithForm extends Popup{
     this._handleFormSubmit = handleFormSubmit;
   }
 
-  open(){ 
-    super.open();
-  }
-
-  close(){
-    super.close();
-    this.formElementNameOfPlace = document.querySelector('.popup__nameOfPlace');
-    this.formElementLinkForPicture = document.querySelector('.popup__linkForPicture');
-    this.formElementNameOfPlace.value = '';
-    this.formElementLinkForPicture.value = '';
-    formValidatorAddPicture.resetForm();
-  }
-
   setEventListeners() {
-  
     super.setEventListeners();
     this._popupSelector.querySelector('.popup__form').addEventListener('submit', (evt) => {
       evt.preventDefault();

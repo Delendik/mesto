@@ -34,4 +34,4 @@ export class Card {
     this._buttonListeners();
     return this._element;
   }
-};
+}

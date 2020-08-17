@@ -9,3 +9,4 @@ export const popupEditProfile = document.querySelector('.popupEditProfile');
 export const popupName = popupEditProfile.querySelector('.popup__name');
 export const popupAbout = popupEditProfile.querySelector('.popup__about');
 export const formElement = popupEditProfile.querySelector('.popup__form');
+export const buttonProfile = formSelectorEditProfile.querySelector('.popup__save');

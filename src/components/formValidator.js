@@ -4,18 +4,19 @@ export class FormValidator {
     this._buttonElement = config.submitButtonSelector;
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputSelector = config.inputSelector;
+    this._inputErrorClass = config.inputErrorClass;
     this._formElement = formElement;
   };
 
-  _showError = (inputElement, errorMessage) => {
-    this.inputElement.classList.add('popup__input_type_error');
+  _showError = (inputElement, errorMessage, inputError) => {
+    inputElement.classList.add(inputError);
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     errorElement.textContent = errorMessage;
     errorElement.classList.add('popup__error_visible');
   };
   
-  _hideError = (inputElement) => {
-    inputElement.classList.remove('popup__input_type_error');
+  _hideError = (inputElement, inputError) => {
+    inputElement.classList.remove(inputError);
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     errorElement.classList.remove('popup__error_visible');
     errorElement.textContent = '';
@@ -23,9 +24,9 @@ export class FormValidator {
   
   _checkInputValidity = (inputElement) => {
     if (!inputElement.validity.valid) {
-      this._showError(inputElement, inputElement.validationMessage);
+      this._showError(inputElement, inputElement.validationMessage, this._inputErrorClass);
     } else {
-      this._hideError(inputElement);
+      this._hideError(inputElement, this._inputErrorClass);
     }
   };
   
@@ -68,12 +69,16 @@ export class FormValidator {
     });
   };
   
+  activateProfileButton(buttonElement){
+    buttonElement.classList.remove('popup__save_inactive');
+  }
+
   _toggleButtonState = (inputList, buttonElement)=>{
     if (this._hasInvalidInput(inputList)) {
       buttonElement.classList.add('popup__save_inactive');
       buttonElement.setAttribute('disabled', true);
     } else {
-      buttonElement.classList.remove('popup__save_inactive');
+      this.activateProfileButton(buttonElement);
       buttonElement.removeAttribute('disabled');
     }
   };

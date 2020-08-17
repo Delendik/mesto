@@ -1,23 +1,24 @@
-import {initialCards} from '../scripts/utils/initialCards.js';
-import {Card} from '../scripts/components/card.js';
-import {FormValidator} from '../scripts/components/validate.js';
-import {config} from '../scripts/utils/config.js';
-import {Section} from '../scripts/components/section.js';
-import {Popup} from '../scripts/components/popup.js';
-import {PopupWithImage} from '../scripts/components/popupWithImage.js';
-import {PopupWithForm} from '../scripts/components/popupWithForm.js';
-import {UserInfo} from '../scripts/components/userInfo.js';
+import {initialCards} from '../utils/initialCards.js';
+import {Card} from '../components/card.js';
+import {FormValidator} from '../components/formValidator.js';
+import {config} from '../utils/config.js';
+import {Section} from '../components/section.js';
+import {Popup} from '../components/popup.js';
+import {PopupWithImage} from '../components/popupWithImage.js';
+import {PopupWithForm} from '../components/popupWithForm.js';
+import {UserInfo} from '../components/userInfo.js';
 import {
   cardList,
   popupOpenButtonAddPicture,
-  formElementAddCard,
   popupOpenButton,
   formElement,
+  formElementAddCard,
   formSelectorEditProfile,
   formSelectorAddPicture,
   popupName,
-  popupAbout
-} from '../scripts/utils/constants.js'
+  popupAbout,
+  buttonProfile
+} from '../utils/constants.js'
 import './index.css';
 
 const formValidatorAddPicture = new FormValidator(config, formSelectorAddPicture);
@@ -51,11 +52,14 @@ const popupEdit = new Popup ('.popupEditProfile');
 const userInfo = new UserInfo({nameSelector:'.profile__name', aboutSelector:'.profile__about'});
 
 popupOpenButton.addEventListener('click', () =>  {
+  formValidatorEditProfile.enableValidation();
+  
   const userInfoResult=userInfo.getUserInfo();
   popupName.value = userInfoResult.name;
   popupAbout.value = userInfoResult.about;
   formValidatorEditProfile.resetForm();
   popupEdit.open();
+  formValidatorEditProfile.activateProfileButton(buttonProfile);
 });
 
 formElement.addEventListener('submit', (evt) => {
@@ -64,7 +68,9 @@ formElement.addEventListener('submit', (evt) => {
   userInfo.setUserInfo(popupName.value, popupAbout.value);
 });
 
-formElementAddCard.addEventListener('submit', formValidatorAddPicture.enableValidation());
-formElement.addEventListener('submit', formValidatorEditProfile.enableValidation());
-
-popupOpenButtonAddPicture.addEventListener('click', () =>  addNewCard.open());
+popupOpenButtonAddPicture.addEventListener('click', () =>  {
+  formValidatorAddPicture.resetForm(); 
+  formElementAddCard.reset();
+  addNewCard.open(); 
+  formValidatorAddPicture.enableValidation();
+});
