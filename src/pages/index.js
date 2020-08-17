@@ -51,9 +51,11 @@ const popupEdit = new Popup ('.popupEditProfile');
 
 const userInfo = new UserInfo({nameSelector:'.profile__name', aboutSelector:'.profile__about'});
 
-popupOpenButton.addEventListener('click', () =>  {
-  formValidatorEditProfile.enableValidation();
-  
+openPicture.setEventListeners();
+addNewCard.setEventListeners();
+popupEdit.setEventListeners();
+
+popupOpenButton.addEventListener('click', () =>  {  
   const userInfoResult=userInfo.getUserInfo();
   popupName.value = userInfoResult.name;
   popupAbout.value = userInfoResult.about;
@@ -72,5 +74,7 @@ popupOpenButtonAddPicture.addEventListener('click', () =>  {
   formValidatorAddPicture.resetForm(); 
   formElementAddCard.reset();
   addNewCard.open(); 
-  formValidatorAddPicture.enableValidation();
 });
+
+formValidatorEditProfile.enableValidation();
+formValidatorAddPicture.enableValidation();

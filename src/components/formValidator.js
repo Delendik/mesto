@@ -5,28 +5,29 @@ export class FormValidator {
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputSelector = config.inputSelector;
     this._inputErrorClass = config.inputErrorClass;
+    this._errorClass = config.errorClass;
     this._formElement = formElement;
   };
 
-  _showError = (inputElement, errorMessage, inputError) => {
+  _showError = (inputElement, errorMessage, inputError, errorClass) => {
     inputElement.classList.add(inputError);
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add('popup__error_visible');
+    errorElement.classList.add(errorClass);
   };
   
-  _hideError = (inputElement, inputError) => {
+  _hideError = (inputElement, inputError, errorClass) => {
     inputElement.classList.remove(inputError);
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
-    errorElement.classList.remove('popup__error_visible');
+    errorElement.classList.remove(errorClass);
     errorElement.textContent = '';
   };
   
   _checkInputValidity = (inputElement) => {
     if (!inputElement.validity.valid) {
-      this._showError(inputElement, inputElement.validationMessage, this._inputErrorClass);
+      this._showError(inputElement, inputElement.validationMessage, this._inputErrorClass, this._errorClass);
     } else {
-      this._hideError(inputElement, this._inputErrorClass);
+      this._hideError(inputElement, this._inputErrorClass, this._errorClass);
     }
   };
   
@@ -71,6 +72,7 @@ export class FormValidator {
   
   activateProfileButton(buttonElement){
     buttonElement.classList.remove('popup__save_inactive');
+    buttonElement.removeAttribute('disabled');
   }
 
   _toggleButtonState = (inputList, buttonElement)=>{
@@ -79,7 +81,6 @@ export class FormValidator {
       buttonElement.setAttribute('disabled', true);
     } else {
       this.activateProfileButton(buttonElement);
-      buttonElement.removeAttribute('disabled');
     }
   };
 }
