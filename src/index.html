@@ -12,13 +12,13 @@
       </header>
 
       <section class="profile">
-        <div class="profile__avatar"></div>
+        <button class="profile__avatar"></button>
         <div class="profile__info">
           <div class="profile__edit">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button class="profile__button"></button>
           </div>
-          <p class="profile__about">Исследователь океана</p>
+          <p class="profile__about"></p>
         </div>
         <button class="profile__addPicture"></button>
       </section>
@@ -43,6 +43,18 @@
         </div>
       </div>
 
+      <div class="popup popupEditProfileAvatar">
+        <div class="popup__container">
+          <h3 class="popup__title">Обновить аватар</h3>
+          <form  class="popup__form popup__formEditProfileAvatar">
+            <input type="url" class="popup__input popup__linkForAvatar" name = "link" id='linkForAvatar-input' value=""  placeholder="Ссылка на аватар" required>
+            <span class='popup__input_error' id='about-input-error'></span>
+            <button class="popup__save">Сохранить</button>
+          </form>
+          <button class="popup__close"></button>
+        </div>
+      </div>
+
       <div class="popup popupAddCard">
         <div class="popup__container">
           <h3 class="popup__title">Новое место</h3>
@@ -52,6 +64,16 @@
             <input type="url" class="popup__input popup__linkForPicture" name = "link" id='linkForPicture-input' value=""  placeholder="Ссылка на картинку" required>
             <span class='popup__input_error' id='linkForPicture-input-error'></span>
             <button class="popup__save">Создать</button>
+          </form>
+          <button class="popup__close"></button>
+        </div>
+      </div>
+
+      <div class="popup popupDeleteCard">
+        <div class="popup__container">
+          <h3 class="popup__title">Вы уверены?</h3>
+          <form  class="popup__form popup__formDeletePicture">
+            <button class="popup__save" type="submit">Да</button>
           </form>
           <button class="popup__close"></button>
         </div>
@@ -72,7 +94,10 @@
         <img src="#" alt="Место из названия" class="card__picture">
         <div class="card__description">
           <h3 class="card__title"></h3>
-          <button class="card__like"></button>
+          <div class="card__likeContainer">
+            <button class="card__like"></button>
+            <span class="card__likeNumbers">0</span>
+          </div>
         </div>
       </li>
     </template>

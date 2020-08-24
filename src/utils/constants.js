@@ -10,3 +10,5 @@ export const popupName = popupEditProfile.querySelector('.popup__name');
 export const popupAbout = popupEditProfile.querySelector('.popup__about');
 export const formElement = popupEditProfile.querySelector('.popup__form');
 export const buttonProfile = formSelectorEditProfile.querySelector('.popup__save');
+export const buttonCard = formSelectorAddPicture.querySelector('.popup__save');
+export const buttonDeleteCard = document.querySelector('.card__trash');
