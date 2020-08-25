@@ -18,6 +18,10 @@ export class Card {
     evt.target.closest('.card').remove();
   };
 
+  // removeCard (id){
+  //   document.querySelector('.card__like').remove();
+  // };
+
   _buttonListeners () {
     this._element.querySelector('.card__like').addEventListener('click', this._handleCardLike);
     this._element.querySelector('.card__trash').addEventListener('click', this._handleCardRemove);

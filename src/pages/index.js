@@ -24,7 +24,6 @@ import {
   popupAbout,
   buttonProfile,
   buttonCard
-  // buttonDeleteCard
 } from '../utils/constants.js'
 import './index.css';
 
@@ -35,8 +34,7 @@ const api = new Api({
     authorization: '2211156a-197b-42d9-becd-f429311725f7'
   }
 })
-//api.changeUserInfo();
-//api.addNewCard();
+
 api.getUserInfo().then(items =>{
   document.querySelector('.profile__name').textContent=items.name;
   document.querySelector('.profile__about').textContent=items.about;
@@ -46,16 +44,13 @@ const deleteCardOnPage = new PopupDeleteCard(
   '.popupDeleteCard'
 );
 deleteCardOnPage.setEventListeners();
-// deleteCardOnPage.setSubmitHandler(() => {
-//   api.deleteCard(item._id);
-// });
 
 api.getCardsFromServer().then(data =>{
   const defaultCardList = new Section({
     items: data,
     renderer: (item) => {
       const card = new Card({name:item.name, url:item.link, likes:item.likes, userId:item.owner._id, selector:'.templateCard', 
-      handleCardLike: (evt) => {
+        handleCardLike: (evt) => {
           if(evt.target.classList.contains('card__like_black')){
             card.likeCard(evt);
             evt.target.closest('.card').querySelector('.card__likeNumbers').textContent = (item.likes.length-1);
@@ -67,13 +62,18 @@ api.getCardsFromServer().then(data =>{
             api.likeCard(item._id);
           }  
         }, 
-        handleCardRemove: () => {
-          deleteCardOnPage.setSubmitHandler({func:api.deleteCard(item._id)});
+
+        handleCardRemove: (evt) => {
+          deleteCardOnPage.setSubmitHandler(()=>{
+            api.deleteCard(item._id);
+            card.removeCard(evt);
+            deleteCardOnPage.close();
+          });
           deleteCardOnPage.open();
         }, 
         handleCardClick: () => {
           openPicture.open(item.name, item.link);
-        }});
+      }});
       const cardElement = card.createCard();
       defaultCardList.addItem(cardElement);
     }
@@ -94,19 +94,24 @@ const addNewCard = new PopupWithForm(
     buttonCard.textContent = 'Сохранение...';
     const card = new Card({name:item.name, url:item.link, likes:[], userId:'c3c0bd097c2770d7add759cc', selector:'.templateCard', 
       handleCardLike: (evt) => {
-      if(evt.target.classList.contains('card__like_black')){
-        card.likeCard(evt);
-        evt.target.closest('.card').querySelector('.card__likeNumbers').textContent = 0;
-        api.deleteLikeCard(item._id);
-        
-      }else{
-        card.likeCard(evt);
-        evt.target.closest('.card').querySelector('.card__likeNumbers').textContent = 1;
-        api.likeCard(item._id);
-      }  
-    }, 
-      handleCardRemove: () => {
-        deleteCardOnPage.setSubmitHandler({func:api.deleteCard(item._id)});
+        if(evt.target.classList.contains('card__like_black')){
+          card.likeCard(evt);
+          evt.target.closest('.card').querySelector('.card__likeNumbers').textContent = 0;
+          api.deleteLikeCard(item._id);
+          
+        }else{
+          card.likeCard(evt);
+          evt.target.closest('.card').querySelector('.card__likeNumbers').textContent = 1;
+          api.likeCard(item._id);
+        }  
+      }, 
+
+      handleCardRemove: (evt) => {
+        deleteCardOnPage.setSubmitHandler(()=>{
+        api.deleteCard(item._id);
+        card.removeCard(evt);
+        deleteCardOnPage.close();
+      });
         deleteCardOnPage.open();
       }, 
       handleCardClick: () => {
@@ -116,7 +121,7 @@ const addNewCard = new PopupWithForm(
     cardList.append(cardElement);
     api.addNewCard({name:item.name, link:item.link});
     addNewCard.close();
-    } 
+  } 
 );
 
 const popupEdit = new Popup ('.popupEditProfile');

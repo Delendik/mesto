@@ -9,6 +9,10 @@ export class PopupDeleteCard extends Popup{
   
   open(){
     super.open();
+    // this._popupSelector.querySelector('.popup__formDeletePicture').addEventListener('submit', (evt) => {
+    //   evt.preventDefault();
+    //     func();
+    // })  
     //setEventListeners()
   }
 
