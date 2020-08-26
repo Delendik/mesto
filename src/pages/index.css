@@ -13,7 +13,6 @@
 @import url(../blocks/cardsList/cardsList.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/popupEditProfileAvatar/popupEditProfileAvatar.css);
 @import url(../blocks/popup/__linkForAvatar/popup__linkForAvatar.css);
 @import url(../blocks/popup/__error/_visible/popup__error_visible.css);
 @import url(../blocks/popup/__save/_inactive/popup__save_inactive.css);
