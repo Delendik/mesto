@@ -17,3 +17,6 @@ export const buttonProfile = formSelectorEditProfile.querySelector('.popup__save
 export const buttonProfileAvatar = document.querySelector('.popupEditProfileAvatar').querySelector('.popup__save');
 export const buttonCard = formSelectorAddPicture.querySelector('.popup__save');
 export const buttonDeleteCard = document.querySelector('.card__trash');
+export const profileName = document.querySelector('.profile__name');
+export const profileAbout = document.querySelector('.profile__about');
+export const profileImage = document.querySelector('.profile__image');

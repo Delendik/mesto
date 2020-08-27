@@ -1,13 +1,14 @@
 export class Card {
-  constructor({name, url, likes, userId, selector, handleCardLike, handleCardRemove, handleCardClick}){
+  constructor({name, url, likes, userId, selector, handleCardLike, handleCardRemove, handleCardClick, myuserId}){
     this._name = name;
     this._url = url;
-    this._likes = likes;
-    this._userId = userId;
+    this._likes = likes || [];
+    this._userId = userId || 'c3c0bd097c2770d7add759cc'; 
     this._selector = selector;
     this._handleCardLike = handleCardLike;
     this._handleCardRemove = handleCardRemove;
     this._handleCardClick = handleCardClick;
+    this._myuserId = myuserId;
   }
 
   likeCard = (evt) => {
@@ -29,19 +30,36 @@ export class Card {
     return cardElement;
   }
 
+  addLike(evt){
+    evt.closest('.card').querySelector('.card__likeNumbers').textContent = (this._likes.length+=1);
+  }
+
+  removeLike(evt){
+    evt.closest('.card').querySelector('.card__likeNumbers').textContent = (this._likes.length-=1);
+  }
+
   checkLike(){
     this._element = this._getTemplate();
     const cardLikesColor = this._element.querySelector('.card__like');
-    this._likes.forEach(element => {
+    this._likes.some(element => {
       if(element._id.includes('c3c0bd097c2770d7add759cc')){
         cardLikesColor.classList.add('card__like_black');
       }
     });
   }
 
-  createCard(){
+  // trashPicture(){
+  //   this._element = this._getTemplate();
+  //     if(this._userId!=this._myuserId){
+  //       const cardTrash = this._element.querySelector('.card__trash');
+  //       cardTrash.style.display='none';
+  //       cardTrash.setAttribute('disabled', true);
+  //     }
+  // }
+
+  createRenderCard(){
     this._element = this._getTemplate();
-    if(this._userId!='c3c0bd097c2770d7add759cc'){
+    if(this._userId!=this._myuserId){
       const cardTrash = this._element.querySelector('.card__trash');
       cardTrash.style.display='none';
       cardTrash.setAttribute('disabled', true);
@@ -54,7 +72,25 @@ export class Card {
     cardLink.src = this._url;
     cardLikes.textContent = this._likes.length;
     this._likes.forEach(element => {
-      if(element._id.includes('c3c0bd097c2770d7add759cc')){
+      if(element._id.includes(this._myuserId)){
+        cardLikesColor.classList.add('card__like_black');
+      }
+    });
+    this._buttonListeners();
+    return this._element;
+  }
+
+  createNewCard(){
+    this._element = this._getTemplate();
+    const cardTitle = this._element.querySelector('.card__title');
+    const cardLink = this._element.querySelector('.card__picture');
+    const cardLikes = this._element.querySelector('.card__likeNumbers');
+    const cardLikesColor = this._element.querySelector('.card__like');
+    cardTitle.textContent = this._name;
+    cardLink.src = this._url;
+    cardLikes.textContent = this._likes.length;
+    this._likes.forEach(element => {
+      if(element._id.includes(this._myuserId)){
         cardLikesColor.classList.add('card__like_black');
       }
     });
