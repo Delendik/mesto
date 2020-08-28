@@ -92,8 +92,7 @@ const newCard = (item) =>{
     },
     myuserId:'c3c0bd097c2770d7add759cc'
   });
-  const cardElement = card.createCard();
-  return cardElement;
+  return card;
 }
 Promise.all([
   api.getUserInfo(),
@@ -108,7 +107,8 @@ Promise.all([
     const defaultCardList = new Section({
       items: data,
       renderer: (item) => {
-        defaultCardList.addItem(newCard(item));
+        const cardElement = newCard(item).renderCard();
+        defaultCardList.addItem(cardElement);
       }
     }, cardList);   
     defaultCardList.renderer();
@@ -131,7 +131,8 @@ const addNewCard = new PopupWithForm(
   '.popupAddCard',
   (item) => {
     updateTextButton(buttonCard);
-    cardList.append(newCard(item));
+    const cardElement = newCard(item).createCard();
+    cardList.append(cardElement);
     api.addNewCard({name:item.name, link:item.link})
     .then(() =>{
       addNewCard.close();

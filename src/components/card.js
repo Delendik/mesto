@@ -51,11 +51,6 @@ export class Card {
 
   createCard(){
     this._element = this._getTemplate();
-    if(this._userId!=this._myuserId){
-      const cardTrash = this._element.querySelector('.card__trash');
-      cardTrash.style.display='none';
-      cardTrash.setAttribute('disabled', true);
-    }
     const cardTitle = this._element.querySelector('.card__title');
     const cardLink = this._element.querySelector('.card__picture');
     const cardLikes = this._element.querySelector('.card__likeNumbers');
@@ -69,6 +64,16 @@ export class Card {
       }
     });
     this._buttonListeners();
+    return this._element;
+  }
+  
+  renderCard(){
+    this.createCard()
+    if(this._userId!=this._myuserId){
+      const cardTrash = this._element.querySelector('.card__trash');
+      cardTrash.style.display='none';
+      cardTrash.setAttribute('disabled', true);
+    }
     return this._element;
   }
 }
