@@ -1,15 +1,16 @@
 export class Card {
-  constructor({name, url, likes = [], userId = 'c3c0bd097c2770d7add759cc', selector, handleCardLike, handleCardRemove, handleCardClick, myuserId}){
+  constructor({name, link, likes= [], owner = 'c3c0bd097c2770d7add759cc'}, {selector, handleCardLike, handleCardRemove, handleCardClick, myuserId}){
     this._name = name;
-    this._url = url;
-    this._likes = likes ;
-    this._userId = userId ; 
+    this._link = link;
+    this._likes = likes;
+    this._userId = owner._id; 
     this._selector = selector;
     this._handleCardLike = handleCardLike;
     this._handleCardRemove = handleCardRemove;
     this._handleCardClick = handleCardClick;
     this._myuserId = myuserId;
   }
+  
 
   likeCard = (evt) => {
     evt.target.classList.toggle('card__like_black');
@@ -48,16 +49,7 @@ export class Card {
     });
   }
 
-  // trashPicture(){
-  //   this._element = this._getTemplate();
-  //     if(this._userId!=this._myuserId){
-  //       const cardTrash = this._element.querySelector('.card__trash');
-  //       cardTrash.style.display='none';
-  //       cardTrash.setAttribute('disabled', true);
-  //     }
-  // }
-
-  createRenderCard(){
+  createCard(){
     this._element = this._getTemplate();
     if(this._userId!=this._myuserId){
       const cardTrash = this._element.querySelector('.card__trash');
@@ -69,25 +61,7 @@ export class Card {
     const cardLikes = this._element.querySelector('.card__likeNumbers');
     const cardLikesColor = this._element.querySelector('.card__like');
     cardTitle.textContent = this._name;
-    cardLink.src = this._url;
-    cardLikes.textContent = this._likes.length;
-    this._likes.forEach(element => {
-      if(element._id.includes(this._myuserId)){
-        cardLikesColor.classList.add('card__like_black');
-      }
-    });
-    this._buttonListeners();
-    return this._element;
-  }
-
-  createNewCard(){
-    this._element = this._getTemplate();
-    const cardTitle = this._element.querySelector('.card__title');
-    const cardLink = this._element.querySelector('.card__picture');
-    const cardLikes = this._element.querySelector('.card__likeNumbers');
-    const cardLikesColor = this._element.querySelector('.card__like');
-    cardTitle.textContent = this._name;
-    cardLink.src = this._url;
+    cardLink.src = this._link;
     cardLikes.textContent = this._likes.length;
     this._likes.forEach(element => {
       if(element._id.includes(this._myuserId)){

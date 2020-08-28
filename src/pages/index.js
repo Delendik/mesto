@@ -49,54 +49,52 @@ const deleteCardOnPage = new PopupDeleteCard(
 deleteCardOnPage.setEventListeners();
 
 const newCard = (item) =>{
-  const card = new Card({name:item.name, url:item.link, likes:item.likes, userId:item.owner._id, selector:'.templateCard', 
-          handleCardLike: (evt) => {
-            if(evt.target.classList.contains('card__like_black')){                        
-              api.deleteLikeCard(item._id)
-              .then(() =>{
-                card.likeCard(evt); 
-                card.removeLike(evt.target);
-              })
-              .catch((err) => {
-                console.log(err); 
-              });
-            }else{                       
-              api.likeCard(item._id)
-              .then(() =>{
-                card.likeCard(evt);  
-                card.addLike(evt.target);
-              })
-              .catch((err) => {
-                console.log(err); 
-              });
-            }  
-          }, 
-
-          handleCardRemove: (evt) => {
-            deleteCardOnPage.setSubmitHandler(()=>{
-              api.deleteCard(item._id)
-              .then(() =>{
-                card.removeCard(evt);
-                deleteCardOnPage.close();
-              })
-              .catch((err) => {
-                console.log(err); 
-              });
-            });
-            deleteCardOnPage.open();
-          }, 
-
-          handleCardClick: () => {
-            openPicture.open(item.name, item.link);
-          },
-          myuserId:'c3c0bd097c2770d7add759cc'
+  const card = new Card(item, {
+    selector:'.templateCard', 
+    handleCardLike: (evt) => {
+      if(evt.target.classList.contains('card__like_black')){                        
+        api.deleteLikeCard(item._id)
+        .then(() =>{
+          card.likeCard(evt); 
+          card.removeLike(evt.target);
+        })
+        .catch((err) => {
+          console.log(err); 
         });
-  // const cardElement = card.createCard();
-  // return cardElement;
-  
- return card;
-}
+      }else{                       
+        api.likeCard(item._id)
+        .then(() =>{
+          card.likeCard(evt);  
+          card.addLike(evt.target);
+        })
+        .catch((err) => {
+          console.log(err); 
+        });
+      }  
+    }, 
 
+    handleCardRemove: (evt) => {
+      deleteCardOnPage.setSubmitHandler(()=>{
+        api.deleteCard(item._id)
+        .then(() =>{
+          card.removeCard(evt);
+          deleteCardOnPage.close();
+        })
+        .catch((err) => {
+          console.log(err); 
+        });
+      });
+      deleteCardOnPage.open();
+    }, 
+
+    handleCardClick: () => {
+      openPicture.open(item.name, item.link);
+    },
+    myuserId:'c3c0bd097c2770d7add759cc'
+  });
+  const cardElement = card.createCard();
+  return cardElement;
+}
 Promise.all([
   api.getUserInfo(),
   api.getCardsFromServer()
@@ -110,12 +108,7 @@ Promise.all([
     const defaultCardList = new Section({
       items: data,
       renderer: (item) => {
-
-        //defaultCardList.addItem(newCard(item));
-
-        //newCards.trashPicture();
-        const cardElement = newCard(item).createRenderCard();
-        defaultCardList.addItem(cardElement);
+        defaultCardList.addItem(newCard(item));
       }
     }, cardList);   
     defaultCardList.renderer();
@@ -138,9 +131,7 @@ const addNewCard = new PopupWithForm(
   '.popupAddCard',
   (item) => {
     updateTextButton(buttonCard);
-    
-    const cardElement = newCard(item).createNewCard();
-    cardList.append(cardElement);
+    cardList.append(newCard(item));
     api.addNewCard({name:item.name, link:item.link})
     .then(() =>{
       addNewCard.close();
