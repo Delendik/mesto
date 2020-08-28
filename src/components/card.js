@@ -1,9 +1,9 @@
 export class Card {
-  constructor({name, url, likes, userId, selector, handleCardLike, handleCardRemove, handleCardClick, myuserId}){
+  constructor({name, url, likes = [], userId = 'c3c0bd097c2770d7add759cc', selector, handleCardLike, handleCardRemove, handleCardClick, myuserId}){
     this._name = name;
     this._url = url;
-    this._likes = likes || [];
-    this._userId = userId || 'c3c0bd097c2770d7add759cc'; 
+    this._likes = likes ;
+    this._userId = userId ; 
     this._selector = selector;
     this._handleCardLike = handleCardLike;
     this._handleCardRemove = handleCardRemove;
