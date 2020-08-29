@@ -4,15 +4,19 @@ export class Api{
     this.headers = headers;
   }
 
+  _getResponseData(res){    
+      if(res.ok){
+        return res.json()
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+  }
+  
   getUserInfo(){
     return fetch(`${this.url}/users/me`, {
       headers: this.headers
     })
     .then(res =>{ 
-      if(res.ok){
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res);
     });
   }
 
@@ -21,10 +25,7 @@ export class Api{
       headers: this.headers
     })
     .then(res =>{ 
-      if(res.ok){
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res);
     });
   }
 
@@ -33,6 +34,9 @@ export class Api{
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify(items)
+    })
+    .then(res =>{ 
+      return this._getResponseData(res);
     });
   }
 
@@ -41,6 +45,9 @@ export class Api{
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify(items)
+    })
+    .then(res =>{ 
+      return this._getResponseData(res);
     });
   }
 
@@ -49,6 +56,9 @@ export class Api{
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify(items)
+    })
+    .then(res =>{ 
+      return this._getResponseData(res);
     });
   }
 
@@ -57,6 +67,9 @@ export class Api{
       method: 'DELETE',
       headers: this.headers
     })
+    .then(res =>{ 
+      return this._getResponseData(res);
+    });
   }
 
   likeCard(id){
@@ -64,6 +77,9 @@ export class Api{
       method: 'PUT',
       headers: this.headers
     })
+    .then(res =>{ 
+      return this._getResponseData(res);
+    });
   }
 
   deleteLikeCard(id){
@@ -71,5 +87,8 @@ export class Api{
       method: 'DELETE',
       headers: this.headers
     })
+    .then(res =>{ 
+      return this._getResponseData(res);
+    });
   }
 }

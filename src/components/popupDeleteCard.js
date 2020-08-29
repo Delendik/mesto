@@ -1,7 +1,7 @@
 import {Popup} from './popup.js';
 
 export class PopupDeleteCard extends Popup{
-  constructor(popupSelector, handleDelete){
+  constructor(popupSelector){
     super(popupSelector);
   }
 

@@ -48,7 +48,8 @@ const deleteCardOnPage = new PopupDeleteCard(
 );
 deleteCardOnPage.setEventListeners();
 
-const newCard = (item) =>{
+//функция создания карточки
+const newCard = (item, myId) =>{
   const card = new Card(item, {
     selector:'.templateCard', 
     handleCardLike: (evt) => {
@@ -74,6 +75,7 @@ const newCard = (item) =>{
     }, 
 
     handleCardRemove: (evt) => {
+      deleteCardOnPage.open();
       deleteCardOnPage.setSubmitHandler(()=>{
         api.deleteCard(item._id)
         .then(() =>{
@@ -84,16 +86,18 @@ const newCard = (item) =>{
           console.log(err); 
         });
       });
-      deleteCardOnPage.open();
+      
     }, 
 
     handleCardClick: () => {
       openPicture.open(item.name, item.link);
     },
-    myuserId:'c3c0bd097c2770d7add759cc'
+    myuserId:myId
   });
   return card;
 }
+
+//отрисовка карточек с сервера
 Promise.all([
   api.getUserInfo(),
   api.getCardsFromServer()
@@ -107,8 +111,8 @@ Promise.all([
     const defaultCardList = new Section({
       items: data,
       renderer: (item) => {
-        const cardElement = newCard(item).renderCard();
-        defaultCardList.addItem(cardElement);
+        const cardElement = newCard(item, userInfo._id).renderCard();
+        defaultCardList.addItem(cardElement); 
       }
     }, cardList);   
     defaultCardList.renderer();
@@ -116,6 +120,23 @@ Promise.all([
   .catch((err) => {
     console.log(err); 
   });
+
+//отрисовка новой карточки
+const addNewCard = new PopupWithForm(
+  '.popupAddCard',
+  (item) => {
+    updateTextButton(buttonCard);
+    api.addNewCard(item)
+    .then((res) =>{
+      const cardElement = newCard(res, userInfo._id).createCard();
+      cardList.append(cardElement);
+      addNewCard.close();
+    })
+    .catch((err) => {
+      console.log(err); 
+    });
+  } 
+);
 
 const formValidatorAddPicture = new FormValidator(config, formSelectorAddPicture);
 const formValidatorEditProfile = new FormValidator(config, formSelectorEditProfile);
@@ -126,22 +147,6 @@ const openPicture = new PopupWithImage({
   linkOfPicture:'.popupPicture__image', 
   titleOfPicture:'.popupPicture__title'
 });
-
-const addNewCard = new PopupWithForm(
-  '.popupAddCard',
-  (item) => {
-    updateTextButton(buttonCard);
-    const cardElement = newCard(item).createCard();
-    cardList.append(cardElement);
-    api.addNewCard({name:item.name, link:item.link})
-    .then(() =>{
-      addNewCard.close();
-    })
-    .catch((err) => {
-      console.log(err); 
-    });
-  } 
-);
 
 const popupEdit = new Popup ('.popupEditProfile');
 const popupEditAvatar = new Popup ('.popupEditProfileAvatar');

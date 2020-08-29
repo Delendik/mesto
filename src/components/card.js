@@ -1,5 +1,5 @@
 export class Card {
-  constructor({name, link, likes= [], owner = 'c3c0bd097c2770d7add759cc'}, {selector, handleCardLike, handleCardRemove, handleCardClick, myuserId}){
+  constructor({name, link, likes, owner}, {selector, handleCardLike, handleCardRemove, handleCardClick, myuserId}){
     this._name = name;
     this._link = link;
     this._likes = likes;
@@ -11,7 +11,6 @@ export class Card {
     this._myuserId = myuserId;
   }
   
-
   likeCard = (evt) => {
     evt.target.classList.toggle('card__like_black');
   };
@@ -43,7 +42,7 @@ export class Card {
     this._element = this._getTemplate();
     const cardLikesColor = this._element.querySelector('.card__like');
     this._likes.some(element => {
-      if(element._id.includes('c3c0bd097c2770d7add759cc')){
+      if(element._id.includes(this._myuserId)){
         cardLikesColor.classList.add('card__like_black');
       }
     });
