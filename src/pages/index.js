@@ -39,8 +39,8 @@ const api = new Api({
   }
 })
 
-const updateTextButton = (selector) => {
-  selector.textContent = 'Сохранение...';
+const renderLoading = (loading, selector) =>{
+  selector.textContent = loading ? 'Сохранение...' : selector==buttonCard ? 'Создать' : 'Сохранить';
 }
 
 const deleteCardOnPage = new PopupDeleteCard(
@@ -125,7 +125,7 @@ Promise.all([
 const addNewCard = new PopupWithForm(
   '.popupAddCard',
   (item) => {
-    updateTextButton(buttonCard);
+    renderLoading(true, buttonCard)
     api.addNewCard(item)
     .then((res) =>{
       const cardElement = newCard(res, userInfo._id).createCard();
@@ -134,7 +134,8 @@ const addNewCard = new PopupWithForm(
     })
     .catch((err) => {
       console.log(err); 
-    });
+    })
+    .finally(()=>renderLoading(false, buttonCard))
   } 
 );
 
@@ -177,7 +178,7 @@ popupOpenButton.addEventListener('click', () =>  {
 
 formElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  updateTextButton(buttonProfile);
+  renderLoading(true, buttonProfile)
   api.changeUserInfo({name:popupName.value, about:popupAbout.value})
   .then(() =>{
     popupEdit.close();
@@ -185,12 +186,13 @@ formElement.addEventListener('submit', (evt) => {
   })
   .catch((err) => {
     console.log(err); 
-  });
+  })
+  .finally(()=>renderLoading(false, buttonProfile))
 });
 
 formElementAvatar.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  updateTextButton(buttonProfileAvatar);
+  renderLoading(true, buttonProfileAvatar)
   api.changeAvatar({avatar:popupAvatar.value})
   .then(() =>{
     popupEditAvatar.close();
@@ -198,15 +200,16 @@ formElementAvatar.addEventListener('submit', (evt) => {
   })
   .catch((err) => {
     console.log(err); 
-  });
+  })
+  .finally(()=>renderLoading(false, buttonProfileAvatar))
 });
 
 popupOpenButtonAddPicture.addEventListener('click', () =>  {
   formValidatorAddPicture.resetForm(); 
   formElementAddCard.reset();
+  formValidatorAddPicture.enableValidation();
   addNewCard.open(); 
 });
 
 formValidatorEditProfile.enableValidation();
-formValidatorAddPicture.enableValidation();
 formValidatorEditProfileAvatar.enableValidation();
